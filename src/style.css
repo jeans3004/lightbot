@@ -1,0 +1,1062 @@
+:root {
+  --cyan: #00cdff;
+  --btn-cyan: #4ec3dc;
+  --btn-cyan-dark: #2f97ad;
+  --btn-green: #45c04a;
+  --btn-green-dark: #2d8f32;
+  --btn-grey: #b9bec6;
+  --btn-grey-dark: #8f96a0;
+  --btn-orange: #ffb367;
+  --btn-orange-dark: #d98a3f;
+  --ink: #2c5a7a;
+  --ink-2: #4a5f75;
+  --outline: #5f6f8b;
+  --bg-top: #dfe9ef;
+  --bg-mid: #eef4f7;
+  --bg-floor: #f6f9fb;
+  --card: #d6dee6;
+  --card-2: #c9d2dc;
+  --strip-main: #f0e79c;
+  --strip-p1: #b8e6b3;
+  --strip-p2: #f3c1d3;
+  --strip-empty: #b8bcc3;
+  --slot-bg: #f7f9fb;
+  --shadow: rgba(40, 60, 90, 0.28);
+
+  --font: "Trebuchet MS", "Segoe UI", "Noto Sans", "DejaVu Sans", "Liberation Sans", Arial, ui-sans-serif, system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--bg-mid);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+/* -------------------------------------------------------------- fundo */
+
+/* Ceu claro em cima, faixa "chao" mais clara embaixo, e um padrao de trilhas
+ * de circuito ao fundo — o mesmo cenario das telas de menu do original. */
+.menu,
+.game {
+  background:
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 55%, var(--bg-floor) 55.5%, var(--bg-floor) 100%);
+}
+
+.menu::before,
+.game::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(120, 140, 165, 0.14) 46px 48px),
+    repeating-linear-gradient(0deg, transparent 0 46px, rgba(120, 140, 165, 0.14) 46px 48px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 55%, transparent 56%);
+}
+
+/* trilhas de circuito com pontinhos, so na faixa acima do chao */
+.circuits {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 32%;
+  height: 24%;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* -------------------------------------------------------------- splash */
+
+.splash {
+  display: grid;
+  place-items: center;
+  background: var(--cyan);
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  color: #fff;
+  animation: logo-in 0.6s ease-out;
+}
+
+.logo-robot {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 4px;
+}
+
+.logo-text {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding-bottom: 8px;
+}
+
+.splash-tap {
+  position: absolute;
+  bottom: 12%;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* --------------------------------------------------------- botoes base */
+
+/* Botao quadrado com "espessura" — a sombra dura embaixo e o que da o ar
+ * de botao fisico do original. */
+.sq-btn {
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.sq-btn svg {
+  width: 40px;
+  height: 40px;
+}
+
+.sq-btn.cyan {
+  background: var(--btn-cyan);
+  box-shadow: 0 6px 0 var(--btn-cyan-dark), 0 8px 12px -4px var(--shadow);
+}
+
+.sq-btn.ghost {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: none;
+}
+
+.sq-btn:active:not(:disabled) {
+  transform: translateY(4px);
+}
+
+.sq-btn.cyan:active:not(:disabled) {
+  box-shadow: 0 2px 0 var(--btn-cyan-dark);
+}
+
+.sq-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.run-btn {
+  width: 148px;
+  height: 84px;
+  border: none;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--btn-green);
+  box-shadow: 0 7px 0 var(--btn-green-dark), 0 10px 14px -4px var(--shadow);
+  transition: transform 0.08s, box-shadow 0.08s, background 0.15s;
+}
+
+.run-btn svg {
+  width: 56px;
+  height: 56px;
+}
+
+.run-btn:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 var(--btn-green-dark);
+}
+
+.run-btn.stopping {
+  background: var(--btn-orange);
+  box-shadow: 0 7px 0 var(--btn-orange-dark), 0 10px 14px -4px var(--shadow);
+}
+
+.run-btn.stopping:active {
+  box-shadow: 0 2px 0 var(--btn-orange-dark);
+}
+
+.audio-btn svg {
+  width: 44px;
+  height: 44px;
+}
+
+/* ------------------------------------------------------------- menus */
+
+.menu-top {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.menu-title {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.menu-num {
+  display: block;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.menu-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 30px;
+}
+
+.stars-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 22px;
+  border-radius: 12px;
+  background: #fff4b3;
+  color: #d9a400;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 4px 0 #e6d68d;
+}
+
+.star-icon {
+  width: 60px;
+  height: 60px;
+  margin: -12px -8px -12px 0;
+}
+
+/* Nos menus, o botao de som fica ancorado no canto inferior esquerdo. */
+.menu .audio-btn.sq-btn {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+}
+
+/* --------------------------------------------------------- capitulos */
+
+.chapter-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8vw;
+}
+
+.arrow-btn {
+  width: 92px;
+  height: 140px;
+  border: none;
+  background: transparent;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.18));
+  transition: transform 0.1s;
+}
+
+.arrow-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
+.arrow-btn:active {
+  transform: scale(0.94);
+}
+
+.arrow-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.chapter-card {
+  width: min(360px, 60vw);
+  aspect-ratio: 1;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s;
+}
+
+.chapter-card:active {
+  transform: scale(0.97);
+}
+
+.chapter-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.chapter-preview svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chapter-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: -20px;
+}
+
+.chapter-dots i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--btn-grey);
+}
+
+.chapter-dots i.on {
+  background: var(--btn-cyan);
+}
+
+/* -------------------------------------------------------------- fases */
+
+.levels-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot {
+  position: absolute;
+  left: 4%;
+  bottom: 6%;
+  width: min(180px, 18vw);
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.14));
+}
+
+.level-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 760px;
+  padding: 0 24px;
+}
+
+.level-tile {
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 44px;
+  font-weight: 700;
+  background: var(--btn-grey);
+  box-shadow: 0 6px 0 var(--btn-grey-dark);
+  transition: transform 0.08s, box-shadow 0.08s;
+  position: relative;
+}
+
+.level-tile:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--btn-grey-dark);
+}
+
+.level-tile.open {
+  background: var(--btn-cyan);
+  box-shadow: 0 6px 0 var(--btn-cyan-dark);
+}
+
+.level-tile.open:active {
+  box-shadow: 0 2px 0 var(--btn-cyan-dark);
+}
+
+.level-tile:disabled {
+  cursor: not-allowed;
+}
+
+.level-tile svg.lock {
+  width: 40px;
+  height: 40px;
+}
+
+.level-tile .tile-star {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+}
+
+/* ---------------------------------------------------------------- jogo */
+
+.game {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) minmax(300px, 34%);
+  gap: 12px;
+  padding: 14px;
+}
+
+.game-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+
+.game-left .btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.game-left .sq-btn {
+  width: 72px;
+  height: 72px;
+}
+
+.game-left .btn-row .sq-btn {
+  width: 72px;
+}
+
+.level-label {
+  margin-top: 6px;
+  padding-left: 8px;
+  font-size: 30px;
+  color: #222;
+}
+
+/* No jogo, o som vai para o pe da coluna esquerda, como no original. */
+.game .audio-btn.sq-btn {
+  order: 10;
+  margin-top: auto;
+}
+
+.game-center {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-center canvas {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+}
+
+.game-center canvas:active {
+  cursor: grabbing;
+}
+
+.game-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  z-index: 2;
+}
+
+.btn-row.right {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* --------------------------------------------------------------- blocos */
+
+.strips {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+.strip {
+  border-radius: 4px;
+  background: var(--card);
+  padding: 0 0 8px;
+  transition: outline-color 0.12s;
+  outline: 3px solid transparent;
+}
+
+.strip.active {
+  outline-color: var(--btn-cyan);
+}
+
+.strip-head {
+  display: inline-block;
+  padding: 3px 12px 2px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #6a5d20;
+  border-radius: 4px 4px 0 0;
+}
+
+.strip[data-slot="main"] .strip-head {
+  background: var(--strip-main);
+}
+.strip[data-slot="p1"] .strip-head {
+  background: var(--strip-p1);
+  color: #2b5a2a;
+}
+.strip[data-slot="p2"] .strip-head {
+  background: var(--strip-p2);
+  color: #6b2b45;
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 6px 8px 0;
+}
+
+.slot {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.slot svg {
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+
+.slot.empty {
+  background: var(--strip-empty);
+  border: 2px solid transparent;
+}
+
+.strip[data-slot="main"] .slot.empty {
+  background: var(--strip-main);
+}
+.strip[data-slot="p1"] .slot.empty {
+  background: var(--strip-p1);
+}
+.strip[data-slot="p2"] .slot.empty {
+  background: var(--strip-p2);
+}
+
+.slot.filled {
+  cursor: pointer;
+  background: var(--slot-bg);
+  border: 2px solid var(--outline);
+  color: var(--outline);
+  transition: transform 0.08s;
+}
+
+.slot.filled:active {
+  transform: translateY(1px);
+}
+
+.slot.drop-target {
+  outline: 3px solid var(--btn-cyan);
+}
+
+.slot.running {
+  background: #fff;
+  outline: 3px solid var(--btn-green);
+  box-shadow: 0 0 12px -2px var(--btn-green);
+}
+
+.strip.full-warning {
+  animation: shake 0.3s;
+  outline-color: #e5555c;
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* --------------------------------------------------------------- paleta */
+
+.palette {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 8px;
+  flex-shrink: 0;
+}
+
+.chip {
+  width: 76px;
+  height: 76px;
+  border: 2px solid var(--outline);
+  border-radius: 4px;
+  background: var(--card-2);
+  color: var(--outline);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: transform 0.08s, background 0.12s;
+}
+
+.chip svg {
+  width: 52px;
+  height: 52px;
+}
+
+.chip:hover:not(:disabled) {
+  background: #dfe6ee;
+}
+
+.chip:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.locked .slot.filled {
+  cursor: default;
+}
+
+/* -------------------------------------------------------------- dialogo */
+
+.dialogue {
+  position: absolute;
+  left: 2%;
+  top: 6%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 92%;
+  z-index: 3;
+  cursor: pointer;
+  animation: rise 0.25s ease-out;
+}
+
+.dialogue-avatar {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #a9e8ec;
+  border: 8px solid #e8b955;
+  box-shadow: 0 0 0 3px #b8873a inset, 0 6px 10px -3px var(--shadow);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.dialogue-avatar svg {
+  width: 120px;
+  height: 120px;
+}
+
+.speech {
+  position: relative;
+  padding: 16px 22px;
+  border: 3px solid #111;
+  border-radius: 6px;
+  background: #fff;
+  color: #111;
+  font-size: 24px;
+  line-height: 1.25;
+  text-align: center;
+  max-width: 480px;
+}
+
+.speech::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 11px solid transparent;
+  border-right-color: #111;
+}
+
+.speech::after {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 9px solid transparent;
+  border-right-color: #fff;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* --------------------------------------------------------------- overlay */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: rgba(230, 238, 244, 0.72);
+  animation: fade 0.2s;
+}
+
+.overlay-card {
+  min-width: min(440px, 88vw);
+  max-width: min(560px, 92vw);
+  padding: 28px 30px 24px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 0 #cfd8e2, 0 24px 40px -18px var(--shadow);
+  text-align: center;
+  animation: pop 0.25s ease-out;
+}
+
+.overlay-card.win {
+  box-shadow: 0 8px 0 #9fd6a2, 0 24px 40px -18px var(--shadow);
+}
+
+.overlay-card.error {
+  box-shadow: 0 8px 0 #f2b7b9, 0 24px 40px -18px var(--shadow);
+}
+
+.overlay-text {
+  margin: 0 0 20px;
+  font-size: 22px;
+  color: #26415a;
+  line-height: 1.35;
+}
+
+.overlay-stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: -6px 0 18px;
+}
+
+.overlay-stars svg {
+  width: 64px;
+  height: 64px;
+  animation: pop 0.4s ease-out backwards;
+}
+
+.overlay-stars svg:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.overlay-stars svg:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.overlay-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pill-btn {
+  padding: 12px 26px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--btn-grey);
+  box-shadow: 0 5px 0 var(--btn-grey-dark);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.pill-btn.primary {
+  background: var(--btn-green);
+  box-shadow: 0 5px 0 var(--btn-green-dark);
+}
+
+.pill-btn.cyan {
+  background: var(--btn-cyan);
+  box-shadow: 0 5px 0 var(--btn-cyan-dark);
+}
+
+.pill-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--btn-grey-dark);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* ------------------------------------------------------------- responsivo */
+
+@media (max-width: 900px) {
+  .game {
+    grid-template-columns: 84px minmax(0, 1fr) minmax(240px, 36%);
+    gap: 8px;
+    padding: 10px;
+  }
+  .sq-btn,
+  .game-left .sq-btn,
+  .game-left .btn-row .sq-btn {
+    width: 60px;
+    height: 60px;
+  }
+  .sq-btn svg {
+    width: 32px;
+    height: 32px;
+  }
+  .run-btn {
+    width: 120px;
+    height: 70px;
+  }
+  .slot {
+    width: 46px;
+    height: 46px;
+  }
+  .slot svg {
+    width: 32px;
+    height: 32px;
+  }
+  .chip {
+    width: 62px;
+    height: 62px;
+  }
+  .chip svg {
+    width: 42px;
+    height: 42px;
+  }
+  .menu-num {
+    font-size: 48px;
+  }
+  .menu-name {
+    font-size: 24px;
+  }
+  .stars-pill {
+    font-size: 30px;
+  }
+  .star-icon {
+    width: 46px;
+    height: 46px;
+  }
+  .level-tile {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
+  .speech {
+    font-size: 18px;
+    padding: 12px 16px;
+  }
+  .dialogue-avatar {
+    width: 110px;
+    height: 110px;
+  }
+  .dialogue-avatar svg {
+    width: 88px;
+    height: 88px;
+  }
+  .level-label {
+    font-size: 24px;
+  }
+}
+
+/* Celular em pe: o painel de blocos vai para baixo do tabuleiro. */
+@media (max-width: 640px) {
+  .game {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: 8px;
+  }
+  .game-left {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .game-left .sq-btn,
+  .game-left .btn-row .sq-btn {
+    width: 52px;
+    height: 52px;
+  }
+  .level-label {
+    margin: 0 0 0 auto;
+    font-size: 20px;
+  }
+  .game .audio-btn.sq-btn {
+    order: 0;
+    margin-top: 0;
+  }
+  .game-right {
+    max-height: 46vh;
+  }
+  .strips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+  }
+  .strip {
+    flex: 1 1 100%;
+  }
+  .btn-row.right {
+    order: -1;
+  }
+  .run-btn {
+    width: 100px;
+    height: 56px;
+  }
+  .run-btn svg {
+    width: 40px;
+    height: 40px;
+  }
+  .palette {
+    padding: 6px 0 4px;
+  }
+  .chip {
+    width: 54px;
+    height: 54px;
+  }
+  .chip svg {
+    width: 36px;
+    height: 36px;
+  }
+  .slot {
+    width: 42px;
+    height: 42px;
+  }
+  .dialogue {
+    top: 8%;
+    left: 3%;
+    max-width: 94%;
+  }
+  .dialogue-avatar {
+    width: 80px;
+    height: 80px;
+    border-width: 5px;
+  }
+  .dialogue-avatar svg {
+    width: 62px;
+    height: 62px;
+  }
+  .speech {
+    font-size: 15px;
+  }
+  .mascot {
+    display: none;
+  }
+  .level-tile {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+    border-radius: 10px;
+  }
+  .level-grid {
+    gap: 10px;
+  }
+  .arrow-btn {
+    width: 56px;
+    height: 90px;
+  }
+  .chapter-stage {
+    gap: 3vw;
+  }
+  .menu-num {
+    font-size: 40px;
+  }
+  .menu-name {
+    font-size: 20px;
+  }
+  .stars-pill {
+    font-size: 24px;
+    padding: 6px 6px 6px 14px;
+  }
+  .star-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .sq-btn {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0b1020"/>
+  <!-- ladrilho aceso -->
+  <path d="M12 44 32 34l20 10-20 10z" fill="#1d3866"/>
+  <path d="M18 44 32 37l14 7-14 7z" fill="#8ff2ff"/>
+  <!-- robo -->
+  <rect x="24" y="17" width="16" height="13" rx="3.5" fill="#f2f5f9"/>
+  <rect x="26.5" y="30" width="11" height="7" rx="2" fill="#2f7bff"/>
+  <rect x="34" y="21" width="5" height="5" rx="1.4" fill="#63e6ff"/>
+  <path d="M32 17v-5" stroke="#9aa7bd" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="32" cy="9.5" r="3.2" fill="#63e6ff"/>
+</svg>
