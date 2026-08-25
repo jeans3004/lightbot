@@ -1,5 +1,5 @@
 # Publica o jogo no GitHub Pages a cada push na branch main.
-# Depois do primeiro push: Settings → Pages → Source: "GitHub Actions".
+# O configure-pages ativa o Pages sozinho na primeira execucao.
 name: Publicar no GitHub Pages
 
 on:
@@ -21,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/setup-node@v4
         with:
           node-version: 24
