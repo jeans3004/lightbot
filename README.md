@@ -155,3 +155,31 @@ puzzle de programação é uma ideia de jogo, não é protegida por copyright �
 mas o código e a arte do Lightbot são da SpriteBox LLC. Nada aqui foi extraído,
 descompilado ou copiado de nenhum pacote deles; o código, os mapas e os
 gráficos são próprios.
+
+## Hospedagem gratuita (GitHub Pages)
+
+O jogo é só arquivos estáticos, então o GitHub Pages hospeda de graça, com
+link permanente e HTTPS — sem servidor, sem PC ligado, sem DuckDNS.
+
+O workflow em `.github/workflows/deploy.yml` roda os testes, faz o build e
+publica automaticamente a cada `git push` na branch `main`.
+
+Passo a passo (uma vez só):
+
+1. Crie um repositório **público** em https://github.com/new (ex.: `lightbot`),
+   sem README/.gitignore.
+2. Na pasta do projeto:
+   ```bash
+   git remote add origin https://github.com/SEU-USUARIO/lightbot.git
+   git push -u origin main
+   ```
+3. No GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+4. Aguarde ~1 min na aba **Actions**. O link fica:
+   `https://SEU-USUARIO.github.io/lightbot/`
+
+Cada `git push` seguinte atualiza o site sozinho. Para um link mais curto,
+crie o repositório com o nome `SEU-USUARIO.github.io` — o jogo passa a ficar
+na raiz: `https://SEU-USUARIO.github.io/`.
+
+O progresso dos alunos fica no `localStorage` do navegador de cada um (não há
+back-end). Link direto para uma fase: `.../#fase-7`.
